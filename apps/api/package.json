@@ -1,0 +1,24 @@
+{
+  "name": "@podsync/api",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "nest start --watch",
+    "build": "nest build",
+    "lint": "eslint .",
+    "type-check": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@nestjs/common": "^11",
+    "@nestjs/core": "^11",
+    "@nestjs/platform-fastify": "^11",
+    "reflect-metadata": "^0.2",
+    "rxjs": "^7"
+  },
+  "devDependencies": {
+    "@nestjs/cli": "^11",
+    "@podsync/tsconfig": "workspace:*",
+    "@types/node": "^22",
+    "typescript": "^5"
+  }
+}
