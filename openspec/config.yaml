@@ -1,0 +1,43 @@
+schema: spec-driven
+
+context: |
+  # PodSync — Remote Podcast Recording Platform
+
+  ## Tech Stack
+  - Frontend: React 19 + TypeScript + Vite
+  - UI: Tailwind CSS + shadcn/ui
+  - Backend (API/WebSocket): NestJS + Fastify adapter + @nestjs/websockets
+  - Backend (Audio Processing): Python + FFmpeg
+  - Real-time Communication: WebRTC (PeerJS / simple-peer)
+  - Signaling: NestJS WebSocket Gateway (ws)
+  - Object Storage: MinIO (S3-compatible) — used in all environments
+  - Database: PostgreSQL + Prisma ORM
+  - Task Queue: BullMQ + Redis
+  - Audio Processing: FFmpeg + RNNoise (WASM)
+  - Containerization: Docker + Docker Compose
+  - CI/CD: GitHub Actions
+
+  ## Language & Code Style
+  - All code, comments, variable names, commit messages, and documentation must be written in English.
+  - Domain: audio recording and processing platform for podcasts.
+
+  ## Git Workflow
+  - Branching strategy: GitFlow (main, develop, feature/, fix/, release/, hotfix/).
+  - Use git worktrees for parallel work on multiple branches.
+  - Commit format: Conventional Commits (feat, fix, docs, style, refactor, perf, test, build, ci, chore).
+  - PR titles must also follow Conventional Commits format.
+
+  ## Architecture
+  - Microservices-lite architecture with clearly separated layers:
+    1. Client (Browser): audio capture, WebRTC, MediaRecorder, WebSocket signaling.
+    2. API/Signaling Server (NestJS): rooms, recording coordination, chunk reception.
+    3. Storage: MinIO for audio chunks, PostgreSQL for metadata.
+    4. Processing Worker (Python/FFmpeg): chunk concatenation, noise reduction, final mix.
+    5. Notification: email/webhook when audio is ready.
+  - Maximum 5 participants per room.
+  - Audio chunks sent via WebSocket binary frames every 5 seconds.
+
+  ## Constraints
+  - Web platform (browser) is the primary target for MVP.
+  - No user accounts in MVP; access via invitation link.
+  - Processed audio is not available for immediate download.
