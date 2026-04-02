@@ -2,7 +2,7 @@
 
 **Plataforma de Grabación Remota para Podcasts**
 
-Documento Técnico de Diseño — Versión 1.2 — Marzo 2026
+Documento Técnico de Diseño — Versión 1.3 — Abril 2026
 
 **CONFIDENCIAL**
 
@@ -131,11 +131,11 @@ Se analizaron las opciones vigentes para cada componente del sistema, priorizand
 
 #### 4.1.4 Almacenamiento
 
-| Opción              | Ventajas                                                  | Desventajas                                         | Veredicto                              |
-| ------------------- | --------------------------------------------------------- | --------------------------------------------------- | -------------------------------------- |
-| MinIO (self-hosted) | Compatible con S3 API, sin costos de cloud, control total | Requiere infraestructura propia                     | **SELECCIONADO** para MVP / desarrollo |
-| AWS S3              | Alta disponibilidad, escalabilidad automática             | Costos variables por almacenamiento y transferencia | **SELECCIONADO** para producción       |
-| Cloudflare R2       | Compatible S3, sin costos de egress                       | Menor ecosistema de herramientas                    | Alternativa viable en costos           |
+| Opción                  | Ventajas                                                         | Desventajas                                            | Veredicto                              |
+| ----------------------- | ---------------------------------------------------------------- | ------------------------------------------------------ | -------------------------------------- |
+| SeaweedFS (self-hosted) | Compatible con S3 API, licencia Apache 2.0, ligero, bajo consumo | Comunidad más pequeña, menos documentación empresarial | **SELECCIONADO** para MVP / desarrollo |
+| AWS S3                  | Alta disponibilidad, escalabilidad automática                    | Costos variables por almacenamiento y transferencia    | **SELECCIONADO** para producción       |
+| Cloudflare R2           | Compatible S3, sin costos de egress                              | Menor ecosistema de herramientas                       | Alternativa viable en costos           |
 
 ### 4.2 Stack Seleccionado (Resumen)
 
@@ -147,9 +147,9 @@ Se analizaron las opciones vigentes para cada componente del sistema, priorizand
 | Backend (Procesamiento) | Python + FFmpeg                               | Ecosistema líder en procesamiento de audio                   |
 | Comunicación en vivo    | WebRTC (PeerJS / simple-peer)                 | P2P nativo del navegador, baja latencia                      |
 | Señalización            | NestJS WebSocket Gateway (ws)                 | Integrado con el framework, decoradores tipados              |
-| Almacenamiento objetos  | MinIO (dev) / AWS S3 (prod)                   | API S3-compatible, flexibilidad de despliegue                |
+| Almacenamiento objetos  | SeaweedFS (dev) / AWS S3 (prod)               | API S3-compatible, Apache 2.0, bajo consumo de recursos      |
 | Base de datos           | PostgreSQL + Prisma ORM                       | Robusto, relacional, excelente con Node.js                   |
-| Cola de tareas          | BullMQ + Redis                                | Procesamiento asíncrono confiable de audio                   |
+| Cola de tareas          | BullMQ + Dragonfly                            | Procesamiento asíncrono confiable, multi-threaded, BSL 1.1   |
 | Procesamiento audio     | FFmpeg + RNNoise (WASM)                       | Estándar de la industria + reducción de ruido eficiente      |
 | Contenerización         | Docker + Docker Compose                       | Entorno reproducible, fácil despliegue                       |
 | CI/CD                   | GitHub Actions                                | Integración nativa con repositorios                          |
@@ -187,15 +187,15 @@ La arquitectura se organiza en capas claramente separadas siguiendo un patrón d
 │  └───────┬───────┘ └───────┬───────┘ └───────┬───────┘ └───────────────┘  │
 └──────────┼─────────────────┼─────────────────┼────────────────────────────┘
            │                 │                 │
-     ┌─────┴──────┐    ┌─────┴───────┐    ┌────┴──────┐
-     │ PostgreSQL │    │ S3 / MinIO  │    │ BullMQ +  │
-     │ (metadata) │    │  (chunks)   │    │   Redis   │
-     └────────────┘    └─────────────┘    └─────┬─────┘
-                                                │
-                                      ┌─────────┴────────┐
-                                      │   Audio Worker   │
-                                      │ (Python / FFmpeg)│
-                                      └──────────────────┘
+     ┌─────┴──────┐    ┌─────┴───────┐   ┌─────┴─────┐
+     │ PostgreSQL │    │  SeaweedFS  │   │ BullMQ +  │
+     │ (metadata) │    │  (chunks)   │   │ Dragonfly │
+     └────────────┘    └─────────────┘   └─────┬─────┘
+                                               │
+                                     ┌─────────┴─────────┐
+                                     │   Audio Worker    │
+                                     │ (Python / FFmpeg) │
+                                     └───────────────────┘
 ```
 
 ### 5.3 Flujo de Datos Principal
@@ -410,7 +410,7 @@ El desarrollo se organiza en iteraciones incrementales. Cada hito produce un ent
 **Objetivo:** Establecer la base técnica del proyecto con comunicación en tiempo real funcional.
 
 - Setup del monorepo con Turborepo (frontend React + backend NestJS con Fastify adapter)
-- Docker Compose con PostgreSQL, Redis y MinIO
+- Docker Compose con PostgreSQL, Dragonfly y SeaweedFS
 - NestJS WebSocket Gateway con gestión básica de salas (crear, unirse, salir)
 - Signaling WebRTC a través del WebSocket
 - Comunicación de voz peer-to-peer entre 2+ participantes
@@ -625,14 +625,14 @@ Estimación mensual para un escenario de uso moderado (10 sesiones/semana, 5 par
 | VPS (API + WebSocket)  | 2 vCPU, 4 GB RAM (ej. Hetzner, DigitalOcean)  | $15 - $25 USD      |
 | VPS (Worker)           | 2 vCPU, 4 GB RAM (procesamiento FFmpeg)       | $15 - $25 USD      |
 | PostgreSQL             | Managed o en VPS principal                    | $0 - $15 USD       |
-| Redis                  | Managed o en VPS principal                    | $0 - $10 USD       |
+| Dragonfly              | Managed o en VPS principal                    | $0 - $10 USD       |
 | S3 Storage             | ~100 GB/mes (chunks + procesados)             | $2 - $5 USD        |
 | TURN Server            | coturn self-hosted o servicio (Twilio/Xirsys) | $0 - $30 USD       |
 | Dominio + SSL          | Let's Encrypt (gratuito) + dominio            | $1 - $2 USD        |
 | Email (notificaciones) | Resend / SendGrid tier gratuito               | $0 USD             |
 |                        | **TOTAL ESTIMADO**                            | **$33 - $112 USD** |
 
-> **Nota:** Estos costos corresponden a una operación a pequeña escala. Para self-hosting completo (MinIO en lugar de S3, coturn propio), el costo se reduce significativamente al precio de los VPS.
+> **Nota:** Estos costos corresponden a una operación a pequeña escala. Para self-hosting completo (SeaweedFS en lugar de S3, coturn propio), el costo se reduce significativamente al precio de los VPS.
 
 ---
 
