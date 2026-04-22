@@ -68,13 +68,13 @@
 
 ## 7. Verificación end-to-end
 
-- [ ] 7.1 Ejecutar `pnpm install` desde la raíz en clone limpio (o tras `rm -rf node_modules`) y confirmar éxito
-- [ ] 7.2 Ejecutar `pnpm build` desde la raíz y confirmar orden topológico (`shared` → `api`/`web`) sin errores
-- [ ] 7.3 Ejecutar `pnpm dev` y verificar que ambos servidores levantan en paralelo con HMR
-- [ ] 7.4 Probar en navegador que `apps/web` muestra el contenido inicial con Tailwind aplicado y que `fetch('/api')` se proxya al backend
-- [ ] 7.5 Ejecutar `pnpm test` y confirmar que las suites de api y web pasan
-- [ ] 7.6 Ejecutar `pnpm lint` y `pnpm format:check` sin errores
-- [ ] 7.7 Confirmar que `corepack enable && pnpm --version` devuelve la versión declarada en `packageManager`
+- [x] 7.1 Ejecutar `pnpm install` desde la raíz en clone limpio (o tras `rm -rf node_modules`) y confirmar éxito
+- [x] 7.2 Ejecutar `pnpm build` desde la raíz y confirmar orden topológico (`shared` → `api`/`web`) sin errores
+- [x] 7.3 Ejecutar `pnpm dev` y verificar que ambos servidores levantan en paralelo con HMR
+- [x] 7.4 Probar en navegador que `apps/web` muestra el contenido inicial con Tailwind aplicado y que `fetch('/api')` se proxya al backend
+- [x] 7.5 Ejecutar `pnpm test` y confirmar que las suites de api y web pasan
+- [x] 7.6 Ejecutar `pnpm lint` y `pnpm format:check` sin errores
+- [x] 7.7 Confirmar que `corepack enable && pnpm --version` devuelve la versión declarada en `packageManager`
 
 ## 8. Cierre y entrega
 
