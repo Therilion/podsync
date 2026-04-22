@@ -41,18 +41,18 @@
 
 ## 5. TASK-003 — Frontend React + Vite (TDD)
 
-- [ ] 5.1 Inicializar `apps/web` con `pnpm create vite apps/web --template react-ts` (o equivalente manual con la misma estructura)
-- [ ] 5.2 Ajustar `apps/web/package.json`: `name: "web"`, añadir dependencia `"@podsync/shared": "workspace:*"`, scripts `dev`, `build`, `test`, `preview`, `lint`
-- [ ] 5.3 Instalar Tailwind 4: `pnpm --filter web add tailwindcss @tailwindcss/vite`
-- [ ] 5.4 Instalar testing: `pnpm --filter web add -D vitest @testing-library/react @testing-library/jest-dom jsdom @types/jsdom`
-- [ ] 5.5 Ajustar `apps/web/tsconfig.json` para extender `../../tsconfig.base.json` con `jsx: "react-jsx"` y los includes/lib que requiera React+DOM
-- [ ] 5.6 Configurar `apps/web/vite.config.ts` con plugins `react()` y `tailwindcss()`, y `server.proxy` para `/api` → `http://localhost:3000` y `/ws` → `{ target: 'ws://localhost:3000', ws: true }`
-- [ ] 5.7 Configurar bloque `test` de Vitest en `vite.config.ts` (o `vitest.config.ts`) con `environment: 'jsdom'`, `globals: true`, `setupFiles` que importen `@testing-library/jest-dom`
-- [ ] 5.8 Reemplazar/crear CSS principal con `@import "tailwindcss";`
-- [ ] 5.9 **RED**: Crear `apps/web/src/App.test.tsx` que renderiza `<App />` y assertea por contenido visible; ejecutar `pnpm --filter web test` y confirmar fallo
-- [ ] 5.10 **GREEN**: Implementar `apps/web/src/App.tsx` mínimo con un elemento que muestre el contenido esperado y aplique al menos una clase Tailwind (e.g. `text-2xl font-bold`); rerun tests y confirmar verde
-- [ ] 5.11 Verificar: `pnpm --filter web dev` levanta el servidor con HMR; `pnpm --filter web build` genera bundle sin errores
-- [ ] 5.12 Commit: `feat(web): bootstrap react + vite + tailwind with App smoke test`
+- [x] 5.1 Inicializar `apps/web` con `pnpm create vite apps/web --template react-ts` (o equivalente manual con la misma estructura)
+- [x] 5.2 Ajustar `apps/web/package.json`: `name: "web"`, añadir dependencia `"@podsync/shared": "workspace:*"`, scripts `dev`, `build`, `test`, `preview`, `lint`
+- [x] 5.3 Instalar Tailwind 4: `pnpm --filter web add tailwindcss @tailwindcss/vite`
+- [x] 5.4 Instalar testing: `pnpm --filter web add -D vitest @testing-library/react @testing-library/jest-dom jsdom @types/jsdom`
+- [x] 5.5 Ajustar `apps/web/tsconfig.json` para extender `../../tsconfig.base.json` con `jsx: "react-jsx"` y los includes/lib que requiera React+DOM
+- [x] 5.6 Configurar `apps/web/vite.config.ts` con plugins `react()` y `tailwindcss()`, y `server.proxy` para `/api` → `http://localhost:3000` y `/ws` → `{ target: 'ws://localhost:3000', ws: true }`
+- [x] 5.7 Configurar bloque `test` de Vitest en `vite.config.ts` (o `vitest.config.ts`) con `environment: 'jsdom'`, `globals: true`, `setupFiles` que importen `@testing-library/jest-dom`
+- [x] 5.8 Reemplazar/crear CSS principal con `@import "tailwindcss";`
+- [x] 5.9 **RED**: Crear `apps/web/src/App.test.tsx` que renderiza `<App />` y assertea por contenido visible; ejecutar `pnpm --filter web test` y confirmar fallo
+- [x] 5.10 **GREEN**: Implementar `apps/web/src/App.tsx` mínimo con un elemento que muestre el contenido esperado y aplique al menos una clase Tailwind (e.g. `text-2xl font-bold`); rerun tests y confirmar verde
+- [x] 5.11 Verificar: `pnpm --filter web dev` levanta el servidor con HMR; `pnpm --filter web build` genera bundle sin errores
+- [x] 5.12 Commit: `feat(web): bootstrap react + vite + tailwind with App smoke test`
 
 ## 6. TASK-005 — Linting y formateo unificado
 
