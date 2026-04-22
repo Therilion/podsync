@@ -19,11 +19,11 @@
 
 ## 3. TASK-004 — Workspace `packages/shared` (precede a api/web por consumo de tipos)
 
-- [ ] 3.1 Crear estructura `packages/shared/{src,}` con `package.json` (`name: "@podsync/shared"`, `main: "./src/index.ts"`, `types: "./src/index.ts"`, `version: "0.0.0"`, `private: true`)
-- [ ] 3.2 Crear `packages/shared/tsconfig.json` extendiendo `../../tsconfig.base.json` con `outDir: "./dist"` y `rootDir: "./src"`
-- [ ] 3.3 Crear `packages/shared/src/index.ts` exportando enums `RoomStatus`, `ParticipantRole`, `ParticipantStatus` e interfaces `RoomSummary`, `ParticipantInfo` según spec
-- [ ] 3.4 Verificar: `pnpm --filter @podsync/shared build` compila sin errores
-- [ ] 3.5 Commit: `feat(shared): add @podsync/shared with base enums and interfaces`
+- [x] 3.1 Crear estructura `packages/shared/{src,}` con `package.json` (`name: "@podsync/shared"`, `main: "./src/index.ts"`, `types: "./src/index.ts"`, `version: "0.0.0"`, `private: true`)
+- [x] 3.2 Crear `packages/shared/tsconfig.json` extendiendo `../../tsconfig.base.json` con `outDir: "./dist"` y `rootDir: "./src"`
+- [x] 3.3 Crear `packages/shared/src/index.ts` exportando enums `RoomStatus`, `ParticipantRole`, `ParticipantStatus` e interfaces `RoomSummary`, `ParticipantInfo` según spec
+- [x] 3.4 Verificar: `pnpm --filter @podsync/shared build` compila sin errores
+- [x] 3.5 Commit: `feat(shared): add @podsync/shared with base enums and interfaces`
 
 ## 4. TASK-002 — Backend NestJS + Fastify (TDD)
 
