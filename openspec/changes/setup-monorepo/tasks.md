@@ -78,8 +78,8 @@
 
 ## 8. Cierre y entrega
 
-- [ ] 8.1 Revisar diff completo del worktree y limpiar artefactos accidentales
-- [ ] 8.2 Push de la rama `feature/TASK-001-monorepo-setup` al remoto
-- [ ] 8.3 Abrir PR contra `develop` con descripción que referencie US-001 y enlace al change OpenSpec `setup-monorepo`
+- [x] 8.1 Revisar diff completo del worktree y limpiar artefactos accidentales
+- [x] 8.2 Push de la rama `feature/TASK-001-monorepo-setup` al remoto
+- [ ] 8.3 Abrir PR contra `develop` con descripción que referencie US-001 y enlace al change OpenSpec `setup-monorepo` — *`gh` CLI no instalado: abrir manualmente en https://github.com/Therilion/podsync/pull/new/feature/TASK-001-monorepo-setup*
 - [ ] 8.4 Tras merge a `develop`, eliminar el worktree (`git worktree remove ../podsync-feature-task-001`)
 - [ ] 8.5 Ejecutar `/opsx:archive setup-monorepo` para archivar el change y sincronizar specs
