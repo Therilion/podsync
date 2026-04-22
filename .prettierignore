@@ -1,0 +1,13 @@
+node_modules
+dist
+.turbo
+coverage
+pnpm-lock.yaml
+
+# Project documentation and OpenSpec artifacts have their own conventions.
+Docs
+openspec
+*.md
+README.md
+AGENTS.md
+CLAUDE.md

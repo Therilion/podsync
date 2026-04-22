@@ -56,15 +56,15 @@
 
 ## 6. TASK-005 — Linting y formateo unificado
 
-- [ ] 6.1 Instalar en raíz: `pnpm add -Dw eslint @typescript-eslint/parser @typescript-eslint/eslint-plugin eslint-plugin-import prettier`
-- [ ] 6.2 Instalar plugin React específico para web: `pnpm --filter web add -D eslint-plugin-react-hooks eslint-plugin-react`
-- [ ] 6.3 Crear `eslint.config.mjs` (flat config) en raíz con: parser TS, plugins import + typescript, reglas `no-unused-vars` error y `no-explicit-any` warning, override para `apps/web` con `react-hooks/rules-of-hooks` y `react-hooks/exhaustive-deps`
-- [ ] 6.4 Crear `prettier.config.mjs` en raíz con `semi:true, singleQuote:true, trailingComma:'all', printWidth:100, tabWidth:2`
-- [ ] 6.5 Añadir `.prettierignore` con `dist`, `node_modules`, `.turbo`, `coverage`
-- [ ] 6.6 Añadir scripts en cada workspace: `lint: "eslint . --max-warnings=0"` (o ajustar según necesidad)
-- [ ] 6.7 Verificar: `pnpm lint` desde la raíz pasa sin errores; `pnpm format:check` pasa sin diffs
-- [ ] 6.8 (Opcional) Configurar husky + lint-staged: `pnpm add -Dw husky lint-staged`, `pnpm exec husky init`, hook `pre-commit` con `pnpm lint-staged`, config `"*.{ts,tsx}": ["eslint --fix", "prettier --write"]`
-- [ ] 6.9 Commit: `chore(tooling): unify eslint + prettier across workspaces`
+- [x] 6.1 Instalar en raíz: `pnpm add -Dw eslint @typescript-eslint/parser @typescript-eslint/eslint-plugin eslint-plugin-import prettier`
+- [x] 6.2 Instalar plugin React específico para web: `pnpm --filter web add -D eslint-plugin-react-hooks eslint-plugin-react`
+- [x] 6.3 Crear `eslint.config.mjs` (flat config) en raíz con: parser TS, plugins import + typescript, reglas `no-unused-vars` error y `no-explicit-any` warning, override para `apps/web` con `react-hooks/rules-of-hooks` y `react-hooks/exhaustive-deps`
+- [x] 6.4 Crear `prettier.config.mjs` en raíz con `semi:true, singleQuote:true, trailingComma:'all', printWidth:100, tabWidth:2`
+- [x] 6.5 Añadir `.prettierignore` con `dist`, `node_modules`, `.turbo`, `coverage`
+- [x] 6.6 Añadir scripts en cada workspace: `lint: "eslint . --max-warnings=0"` (o ajustar según necesidad)
+- [x] 6.7 Verificar: `pnpm lint` desde la raíz pasa sin errores; `pnpm format:check` pasa sin diffs
+- [ ] 6.8 (Opcional) Configurar husky + lint-staged: `pnpm add -Dw husky lint-staged`, `pnpm exec husky init`, hook `pre-commit` con `pnpm lint-staged`, config `"*.{ts,tsx}": ["eslint --fix", "prettier --write"]` — *diferido por decisión del usuario*
+- [x] 6.9 Commit: `chore(tooling): unify eslint + prettier across workspaces`
 
 ## 7. Verificación end-to-end
 
