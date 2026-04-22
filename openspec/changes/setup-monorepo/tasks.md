@@ -27,17 +27,17 @@
 
 ## 4. TASK-002 — Backend NestJS + Fastify (TDD)
 
-- [ ] 4.1 Crear `apps/api/package.json` con `name: "api"`, dependencia `"@podsync/shared": "workspace:*"`, scripts `dev`, `build`, `test`, `lint`, `start:prod`
-- [ ] 4.2 Instalar deps runtime: `pnpm --filter api add @nestjs/core @nestjs/common @nestjs/platform-fastify fastify reflect-metadata rxjs`
-- [ ] 4.3 Instalar devDeps: `pnpm --filter api add -D @nestjs/cli @nestjs/testing typescript @types/node jest ts-jest @types/jest`
-- [ ] 4.4 Crear `apps/api/tsconfig.json` extendiendo base, con `outDir: "./dist"`, `rootDir: "./src"`, `experimentalDecorators: true`, `emitDecoratorMetadata: true`
-- [ ] 4.5 Crear `apps/api/jest.config.ts` con preset `ts-jest`, `testRegex: ".*\\.spec\\.ts$"`, `moduleNameMapper` para `@podsync/shared` → `<rootDir>/../../packages/shared/src`
-- [ ] 4.6 **RED**: Crear `apps/api/src/app.module.spec.ts` que verifica que `AppModule` se instancia con `Test.createTestingModule({ imports: [AppModule] }).compile()`; ejecutar `pnpm --filter api test` y confirmar fallo
-- [ ] 4.7 **GREEN**: Crear `apps/api/src/app.module.ts` con `@Module({})` vacío; rerun tests y confirmar verde
-- [ ] 4.8 Crear `apps/api/src/main.ts` con `NestFactory.create<NestFastifyApplication>(AppModule, new FastifyAdapter())`, `setGlobalPrefix('api')` y `listen(process.env.PORT ?? 3000, '0.0.0.0')`
-- [ ] 4.9 Crear test que importe `RoomStatus` de `@podsync/shared` y valide `RoomStatus.ACTIVE === 'active'` (cubre TDD de TASK-004 desde api)
-- [ ] 4.10 Verificar: `pnpm --filter api test` pasa, `pnpm --filter api build` genera `dist/` sin errores, `pnpm --filter api dev` arranca en puerto 3000
-- [ ] 4.11 Commit: `feat(api): bootstrap nestjs + fastify with empty AppModule`
+- [x] 4.1 Crear `apps/api/package.json` con `name: "api"`, dependencia `"@podsync/shared": "workspace:*"`, scripts `dev`, `build`, `test`, `lint`, `start:prod`
+- [x] 4.2 Instalar deps runtime: `pnpm --filter api add @nestjs/core @nestjs/common @nestjs/platform-fastify fastify reflect-metadata rxjs`
+- [x] 4.3 Instalar devDeps: `pnpm --filter api add -D @nestjs/cli @nestjs/testing typescript @types/node jest ts-jest @types/jest`
+- [x] 4.4 Crear `apps/api/tsconfig.json` extendiendo base, con `outDir: "./dist"`, `rootDir: "./src"`, `experimentalDecorators: true`, `emitDecoratorMetadata: true`
+- [x] 4.5 Crear `apps/api/jest.config.ts` con preset `ts-jest`, `testRegex: ".*\\.spec\\.ts$"`, `moduleNameMapper` para `@podsync/shared` → `<rootDir>/../../packages/shared/src`
+- [x] 4.6 **RED**: Crear `apps/api/src/app.module.spec.ts` que verifica que `AppModule` se instancia con `Test.createTestingModule({ imports: [AppModule] }).compile()`; ejecutar `pnpm --filter api test` y confirmar fallo
+- [x] 4.7 **GREEN**: Crear `apps/api/src/app.module.ts` con `@Module({})` vacío; rerun tests y confirmar verde
+- [x] 4.8 Crear `apps/api/src/main.ts` con `NestFactory.create<NestFastifyApplication>(AppModule, new FastifyAdapter())`, `setGlobalPrefix('api')` y `listen(process.env.PORT ?? 3000, '0.0.0.0')`
+- [x] 4.9 Crear test que importe `RoomStatus` de `@podsync/shared` y valide `RoomStatus.ACTIVE === 'active'` (cubre TDD de TASK-004 desde api)
+- [x] 4.10 Verificar: `pnpm --filter api test` pasa, `pnpm --filter api build` genera `dist/` sin errores, `pnpm --filter api dev` arranca en puerto 3000
+- [x] 4.11 Commit: `feat(api): bootstrap nestjs + fastify with empty AppModule`
 
 ## 5. TASK-003 — Frontend React + Vite (TDD)
 
