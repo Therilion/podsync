@@ -17,3 +17,8 @@ coverage/
 .vscode/*
 !.vscode/settings.json
 !.vscode/extensions.json
+
+# AI tooling - personal overrides only
+.claude/settings.local.json
+.opencode/cache/
+.agents/.local/
