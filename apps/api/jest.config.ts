@@ -11,7 +11,7 @@ const config: Config = {
     '^@podsync/shared/(.*)$': '<rootDir>/../../packages/shared/src/$1',
   },
   transform: {
-    '^.+\\.ts$': ['ts-jest', { tsconfig: '<rootDir>/tsconfig.json' }],
+    '^.+\\.ts$': ['ts-jest', { tsconfig: '<rootDir>/tsconfig.jest.json' }],
   },
 };
 

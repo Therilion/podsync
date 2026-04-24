@@ -8,7 +8,9 @@
     "declaration": false,
     "declarationMap": false,
     "sourceMap": false,
-    "useDefineForClassFields": true
+    "useDefineForClassFields": true,
+    "module": "preserve",
+    "moduleResolution": "bundler"
   },
   "include": ["src", "vite.config.ts"]
 }
