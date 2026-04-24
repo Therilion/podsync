@@ -2,6 +2,8 @@ Monorepo managed with Turborepo.
 
 Git Workflow Instructions
 Use git worktrees for all development: every feature, fix, or active task must be worked on in its own worktree (git worktree add ../podsync-<branch-name> <branch-name>), never directly in the main worktree.
+All commit messages will be written in english.
+For commits use git-commit skill
 Follow Gitflow strictly:
 
 main → stable production only.
