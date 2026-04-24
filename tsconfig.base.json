@@ -1,7 +1,7 @@
 {
   "compilerOptions": {
     "target": "ES2023",
-    "module": "ESNext",
+    "module": "nodenext",
     "moduleResolution": "bundler",
     "lib": ["ES2023"],
     "strict": true,
@@ -14,10 +14,9 @@
     "declaration": true,
     "declarationMap": true,
     "sourceMap": true,
-    "baseUrl": ".",
     "paths": {
-      "@podsync/shared": ["packages/shared/src"],
-      "@podsync/shared/*": ["packages/shared/src/*"]
+      "@podsync/shared": ["./packages/shared/src"],
+      "@podsync/shared/*": ["./packages/shared/src/*"]
     }
   }
 }
