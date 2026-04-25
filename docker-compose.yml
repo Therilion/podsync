@@ -1,0 +1,117 @@
+# =============================================================================
+# PodSync — local development infrastructure
+#
+# Services:
+#   - postgres            : PostgreSQL relational database
+#   - dragonfly           : Redis-protocol-compatible cache (drop-in for Redis)
+#   - seaweedfs-*         : Master + volume + filer + S3 gateway
+#   - seaweedfs-bucket-init : One-shot service that idempotently creates the
+#                             initial S3 bucket on first start.
+#
+# Image versions are pinned to stable majors. See README for upgrade policy.
+# =============================================================================
+
+services:
+  postgres:
+    image: postgres:18-alpine
+    container_name: podsync-postgres
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:-podsync}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-podsync_dev}
+      POSTGRES_DB: ${POSTGRES_DB:-podsync}
+    ports:
+      - "${POSTGRES_PORT:-5432}:5432"
+    volumes:
+      # Postgres 18+ stores data in a major-version subdir under /var/lib/postgresql.
+      # Upstream recommends mounting at /var/lib/postgresql (not /var/lib/postgresql/data).
+      - postgres_data:/var/lib/postgresql
+    healthcheck:
+      test:
+        - "CMD-SHELL"
+        - "pg_isready -U ${POSTGRES_USER:-podsync} -d ${POSTGRES_DB:-podsync}"
+      interval: 5s
+      timeout: 5s
+      retries: 10
+      start_period: 5s
+    restart: unless-stopped
+
+  dragonfly:
+    image: docker.dragonflydb.io/dragonflydb/dragonfly:v1.27.1
+    container_name: podsync-dragonfly
+    ulimits:
+      memlock: -1
+    ports:
+      - "${DRAGONFLY_PORT:-6379}:6379"
+    volumes:
+      - dragonfly_data:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "-p", "6379", "ping"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+      start_period: 5s
+    restart: unless-stopped
+
+  seaweedfs-master:
+    image: chrislusf/seaweedfs:4.21
+    container_name: podsync-seaweedfs-master
+    command: "master -ip=seaweedfs-master -ip.bind=0.0.0.0 -port=9333 -mdir=/data"
+    volumes:
+      - seaweedfs_master_data:/data
+    restart: unless-stopped
+
+  seaweedfs-volume:
+    image: chrislusf/seaweedfs:4.21
+    container_name: podsync-seaweedfs-volume
+    command: "volume -mserver=seaweedfs-master:9333 -ip.bind=0.0.0.0 -port=8080 -dir=/data"
+    depends_on:
+      - seaweedfs-master
+    volumes:
+      - seaweedfs_volume_data:/data
+    restart: unless-stopped
+
+  seaweedfs-filer:
+    image: chrislusf/seaweedfs:4.21
+    container_name: podsync-seaweedfs-filer
+    command: "filer -master=seaweedfs-master:9333 -ip.bind=0.0.0.0 -port=8888"
+    depends_on:
+      - seaweedfs-master
+      - seaweedfs-volume
+    volumes:
+      - seaweedfs_filer_data:/data
+    restart: unless-stopped
+
+  seaweedfs-s3:
+    image: chrislusf/seaweedfs:4.21
+    container_name: podsync-seaweedfs-s3
+    command: "s3 -filer=seaweedfs-filer:8888 -ip.bind=0.0.0.0 -port=8333 -config=/etc/seaweedfs/s3.json"
+    depends_on:
+      - seaweedfs-filer
+    ports:
+      - "${S3_PORT:-8333}:8333"
+    volumes:
+      - ./docker/seaweedfs/s3.json:/etc/seaweedfs/s3.json:ro
+    restart: unless-stopped
+
+  seaweedfs-bucket-init:
+    image: amazon/aws-cli:latest
+    container_name: podsync-seaweedfs-bucket-init
+    depends_on:
+      - seaweedfs-s3
+    environment:
+      AWS_ACCESS_KEY_ID: ${S3_ACCESS_KEY:-podsync_dev_key}
+      AWS_SECRET_ACCESS_KEY: ${S3_SECRET_KEY:-podsync_dev_secret}
+      AWS_DEFAULT_REGION: ${S3_REGION:-us-east-1}
+      S3_ENDPOINT: http://seaweedfs-s3:8333
+      S3_BUCKET: ${S3_BUCKET:-podsync}
+    entrypoint: ["/bin/sh", "/usr/local/bin/init-bucket.sh"]
+    volumes:
+      - ./docker/seaweedfs/init-bucket.sh:/usr/local/bin/init-bucket.sh:ro
+    restart: "no"
+
+volumes:
+  postgres_data:
+  dragonfly_data:
+  seaweedfs_master_data:
+  seaweedfs_volume_data:
+  seaweedfs_filer_data:
