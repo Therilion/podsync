@@ -58,9 +58,9 @@ PodSync combina comunicación en vivo (WebRTC P2P) con grabación local independ
 | Procesamiento de audio    | Python + FFmpeg               |
 | Comunicación en vivo      | WebRTC (PeerJS / simple-peer) |
 | Señalización              | NestJS WebSocket Gateway      |
-| Almacenamiento de objetos | MinIO (dev) / AWS S3 (prod)   |
+| Almacenamiento de objetos | SeaweedFS (dev) / AWS S3 (prod) |
 | Base de datos             | PostgreSQL + Prisma ORM       |
-| Cola de tareas            | BullMQ + Redis                |
+| Cola de tareas            | BullMQ + Dragonfly (Redis-compatible) |
 | Contenerización           | Docker + Docker Compose       |
 | CI/CD                     | GitHub Actions                |
 
@@ -79,7 +79,7 @@ PodSync combina comunicación en vivo (WebRTC P2P) con grabación local independ
 │  WS Gateway  │  Chunk Receiver  │  Room Manager  │  TURN   │
 └───────┬────────────────┬─────────────────┬─────────────────┘
         │                │                 │
-   PostgreSQL        S3 / MinIO       BullMQ + Redis
+   PostgreSQL        S3 / SeaweedFS   BullMQ + Dragonfly
    (metadata)        (chunks)              │
                                     Audio Worker
                                   (Python / FFmpeg)
@@ -98,28 +98,76 @@ El flujo de datos sigue 6 fases: pre-sesión → inicio de grabación → grabac
 - Docker y Docker Compose
 - FFmpeg
 
-### Puesta en marcha
+### Infraestructura de desarrollo
+
+PodSync provee un stack Docker Compose con todos los servicios de datos que el backend necesita en local: **PostgreSQL**, **Dragonfly** (caché Redis-compatible) y **SeaweedFS** (almacenamiento S3-compatible). Todo se controla por variables de entorno definidas en `.env.example`.
+
+**Versiones fijadas (política: tag de major estable, nunca `latest`):**
+
+| Servicio   | Imagen                                            |
+| ---------- | ------------------------------------------------- |
+| PostgreSQL | `postgres:18-alpine`                              |
+| Dragonfly  | `docker.dragonflydb.io/dragonflydb/dragonfly:v1.27.1` |
+| SeaweedFS  | `chrislusf/seaweedfs:4.21`                        |
+
+**Arrancar el stack:**
+
+```bash
+# Copia y ajusta variables si lo necesitas
+cp .env.example .env
+
+# Levanta todos los servicios y espera a que estén healthy
+docker compose up -d --wait
+```
+
+**Verificar cada servicio:**
+
+```bash
+# PostgreSQL
+pg_isready -h localhost -p ${POSTGRES_PORT:-5432} -U ${POSTGRES_USER:-podsync}
+
+# Dragonfly (protocolo Redis)
+redis-cli -h localhost -p ${DRAGONFLY_PORT:-6379} ping
+# → PONG
+
+# SeaweedFS S3 gateway
+curl -sS -o /dev/null -w '%{http_code}\n' http://localhost:${S3_PORT:-8333}/
+
+# Listar buckets (debe incluir el bucket `podsync` creado al iniciar)
+AWS_ACCESS_KEY_ID=$S3_ACCESS_KEY \
+AWS_SECRET_ACCESS_KEY=$S3_SECRET_KEY \
+aws --endpoint-url "$S3_ENDPOINT" s3 ls
+```
+
+**Limpiar todo (incluye datos):**
+
+```bash
+docker compose down -v
+```
+
+**Credenciales de desarrollo:**
+
+Las credenciales por defecto (`podsync_dev`, `podsync_dev_key`/`podsync_dev_secret`, etc.) están pensadas **únicamente para desarrollo local**. ⚠️ NO deben replicarse en entornos de staging ni producción — esos entornos usan secretos gestionados externamente (variables del runner, AWS Secrets Manager, etc.).
+
+### Puesta en marcha de la app
 
 ```bash
 # Clonar el repositorio
 git clone https://github.com/Therilion/podsync.git
 cd podsync
 
-# Levantar infraestructura local
-docker compose up -d
+# Levantar infraestructura (ver sección anterior)
+cp .env.example .env
+docker compose up -d --wait
 
 # Instalar dependencias
-npm install
-
-# Variables de entorno
-cp apps/api/.env.example apps/api/.env
-cp apps/web/.env.example apps/web/.env
+pnpm install
 
 # Inicializar base de datos
-npm run db:migrate
+pnpm run db:migrate
 
 # Iniciar en modo desarrollo
-npm run dev
+pnpm run dev
 ```
 
 La aplicación estará disponible en `http://localhost:5173` y la API en `http://localhost:3000`.
