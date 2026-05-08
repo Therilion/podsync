@@ -44,4 +44,4 @@
 
 - [x] 7.1 Stage changes (`docker-compose.yml`, `docker/seaweedfs/*`, `.env.example`, `.gitignore`, `README.md`) and create a commit using the `git-commit` skill (Conventional Commits, English, e.g. `feat(infra): add docker compose stack for postgres, dragonfly and seaweedfs`)
 - [x] 7.2 Push the feature branch and open a PR targeting `develop` linking US-002 / TASK-006 — https://github.com/Therilion/podsync/pull/2
-- [ ] 7.3 After PR approval & merge, archive the OpenSpec change with `/opsx:archive`
+- [x] 7.3 After PR approval & merge, archive the OpenSpec change with `/opsx:archive`
