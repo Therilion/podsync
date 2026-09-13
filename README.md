@@ -85,7 +85,7 @@ PodSync combina comunicación en vivo (WebRTC P2P) con grabación local independ
                                   (Python / FFmpeg)
 ```
 
-El flujo de datos sigue 6 fases: pre-sesión → inicio de grabación → grabación activa → finalización → procesamiento → notificación. Ver [docs/technical-design.md](docs/technical-design.md) para el diseño detallado.
+El flujo de datos sigue 6 fases: pre-sesión → inicio de grabación → grabación activa → finalización → procesamiento → notificación. Ver [docs/technical-design.md](Docs/technical-design.md) para el diseño detallado.
 
 ---
 
