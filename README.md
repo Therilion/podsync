@@ -186,12 +186,11 @@ La aplicación estará disponible en `http://localhost:5173` y la API en `http:/
 | []  | 6    | Reducción de ruido en cliente y optimización                 | 2-3 sem  |
 | []  | 7    | Despliegue y lanzamiento                                     | 2 sem    |
 
-**MVP disponible en ~2 meses.** 
 ---
 
 ## Documentación
 
-- [Diseño técnico completo](docs/technical-design.md) — Arquitectura, requerimientos, flujos, modelo de datos y plan de hitos.
+- [Diseño técnico completo](Docs/technical-design.md) — Arquitectura, requerimientos, flujos, modelo de datos y plan de hitos.
 
 ---
 
