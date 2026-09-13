@@ -85,7 +85,7 @@ PodSync combina comunicación en vivo (WebRTC P2P) con grabación local independ
                                   (Python / FFmpeg)
 ```
 
-El flujo de datos sigue 6 fases: pre-sesión → inicio de grabación → grabación activa → finalización → procesamiento → notificación. Ver [docs/technical-design.md](Docs/technical-design.md) para el diseño detallado.
+El flujo de datos sigue 6 fases: pre-sesión → inicio de grabación → grabación activa → finalización → procesamiento → notificación. Ver [docs/technical-design.md](Docs/PodSync_Documento_Tecnico_v1_6.md) para el diseño detallado.
 
 ---
 
@@ -190,7 +190,7 @@ La aplicación estará disponible en `http://localhost:5173` y la API en `http:/
 
 ## Documentación
 
-- [Diseño técnico completo](Docs/technical-design.md) — Arquitectura, requerimientos, flujos, modelo de datos y plan de hitos.
+- [Diseño técnico completo](Docs/PodSync_Documento_Tecnico_v1_6.md) — Arquitectura, requerimientos, flujos, modelo de datos y plan de hitos.
 
 ---
 
