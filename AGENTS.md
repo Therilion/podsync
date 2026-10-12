@@ -15,18 +15,23 @@ Si una tarea contradice la constitución, detente y avisa al owner. No la implem
 - Monorepo con Turborepo + pnpm (Corepack).
 - Stack fijo: TDD §4.2. Añadir un servicio o dependencia de runtime requiere un ADR en `docs/adr/` (constitución, principio VI).
 - Idioma: código, identificadores, comentarios, commits y títulos de PR en **inglés**. Documentación del proyecto en **español**.
+- Herramientas de OpenSpec: `.claude/` y `.agents/` no se versionan. Cada persona las genera en su máquina con `openspec init`. Sí se versionan `openspec/config.yaml`, `openspec/constitution.md`, `openspec/specs/` y `openspec/changes/`.
 
 ## Flujo de trabajo (trunk-based)
 
 - `main` es la única rama permanente. Nunca hagas commit directo a `main`.
 - Una rama corta por tarea, creada desde `main`:
   - `feature/<task-id>-<short-desc>` — funcionalidad nueva;
-  - `fix/<task-id>-<short-desc>` — correcciones, incluidas las urgentes.
-- Cada tarea se trabaja en su propio worktree, nunca en el worktree principal:
+  - `fix/<task-id>-<short-desc>` — correcciones, incluidas las urgentes;
+  - `chore/[<task-id>-]<short-desc>` — docs, CI, dependencias, refactors, configuración (task-id opcional);
+  - `spike/<spike-id>-<short-desc>` — código desechable de validación; nunca se abre PR a `main`.
+- No inventes otros prefijos. Las ramas `release-please--*` las crea release-please; no las toques.
+- Cada tarea se trabaja en su propio worktree dentro de `.worktrees/` (ignorado por git), nunca en el worktree principal:
   ```bash
   git fetch origin
-  git worktree add -b feature/TASK-001-monorepo-setup ../podsync-feature-TASK-001-monorepo-setup origin/main
+  git worktree add -b feature/TASK-001-monorepo-setup .worktrees/feature/TASK-001-monorepo-setup origin/main
   ```
+- Al terminar la tarea, elimina el worktree: `git worktree remove .worktrees/<branch-name>`.
 - Si la tarea es grande, divídela en PRs pequeños que dejen `main` funcionando. Oculta tras un flag lo incompleto que vea el usuario.
 - Al terminar, abre un PR contra `main`. Se mergea solo con squash y la rama se borra.
 
@@ -73,7 +78,7 @@ Si una tarea contradice la constitución, detente y avisa al owner. No la implem
 - Commit directo a `main` o merge que no sea squash.
 - Commit, push, PR, merge u otra escritura en GitHub sin autorización explícita del owner.
 - Trailers `Co-authored-by` o firmas de IA en commits.
-- Mergear código de spikes en `main`.
+- Mergear código de spikes en `main` o abrir un PR desde `spike/*`.
 - Adelantar funcionalidades de hitos futuros o de TDD §13.
 - Exponer `/api/internal/*` o permitir `AUTH_ENABLED=false` en producción.
 - Borrar o sobrescribir chunks crudos de audio.

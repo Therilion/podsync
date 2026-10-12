@@ -83,6 +83,9 @@ recordings/
 Thumbs.db
 
 # --- AI tooling: local, per-user files only -----------------------------------
-# Shared OpenSpec skills/commands in .claude/ and .agents/ ARE committed.
-.claude/settings.local.json
+.claude
+.agents
 CLAUDE.local.md
+
+# Add worktrees to use for development and revisions
+.worktrees
