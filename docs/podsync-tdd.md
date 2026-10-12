@@ -1325,7 +1325,7 @@ El desarrollo se organiza en iteraciones incrementales. Cada hito produce un ent
 - Interfaz mínima: login, dashboard del host (crear y listar salas), unirse a sala, panel de participantes.
 - Botón de mute/unmute funcional.
 - Interfaz `StoragePort` con implementación para SeaweedFS.
-- CI mínimo en GitHub Actions: lint, type-check y tests en cada PR, más validación de títulos de PR con Conventional Commits.
+- CI mínimo en GitHub Actions: lint, type-check y tests en cada PR, más validación de títulos de PR con Conventional Commits, rechazo de PRs desde ramas `spike/*` y rechazo de commits con `Co-authored-by` de IA. Estos checks se marcan como obligatorios en el ruleset de `main`.
 - release-please en modo manifest: un paquete por app desplegable (frontend, API, worker), tags `<paquete>-v<versión>`.
 
 **Entregable:** hosts (cuentas creadas por seed) inician sesión, crean salas y comparten el enlace. Los guests se unen con nombre y email opcional, y todos hablan en tiempo real vía SFU. Ningún host puede operar salas ajenas.

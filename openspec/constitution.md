@@ -104,7 +104,7 @@ En el resto del código, los tests van en el mismo PR que el cambio.
 
 ### Spikes
 
-El código de los spikes (Fase 0 y posteriores) es desechable: nunca se mergea en `main`. Sus resultados se documentan en un informe y en TDD §17.
+El código de los spikes (Fase 0 y posteriores) es desechable: vive en ramas `spike/*` y nunca se mergea en `main`. Un check de CI rechaza los PR desde `spike/*`. Sus resultados se documentan en un informe y en TDD §17.
 
 ---
 
@@ -128,10 +128,14 @@ Estas restricciones solo cambian modificando el TDD y, si afectan un principio, 
 - `main` es la única rama permanente. Siempre debe compilar y pasar los gates de CI.
 - Ramas de trabajo cortas, creadas desde `main`:
   - `feature/<task-id>-<short-desc>` para funcionalidad nueva;
-  - `fix/<task-id>-<short-desc>` para correcciones, incluidas las urgentes.
+  - `fix/<task-id>-<short-desc>` para correcciones, incluidas las urgentes;
+  - `chore/[<task-id>-]<short-desc>` para todo lo que no es funcionalidad ni corrección: docs, CI, dependencias, refactors, configuración. El `<task-id>` es opcional;
+  - `spike/<spike-id>-<short-desc>` para código desechable de validación (ver §2, Spikes). Nunca se mergea en `main`.
+- No se usan más tipos de rama. El tipo de cambio que cuenta para el versionado es el del título del PR, no el prefijo de la rama.
+- Excepción: las ramas que crea release-please (`release-please--*`) se permiten tal cual.
 - Una rama vive como máximo unos días. Si una tarea es más grande, se divide en PRs pequeños que dejan `main` funcionando; el trabajo incompleto visible para usuarios se oculta tras un flag.
 - Prohibido hacer commit directo a `main`. Todo entra por PR.
-- Cada tarea se trabaja en su propio git worktree (`../podsync-<branch-name>`), nunca en el worktree principal.
+- Cada tarea se trabaja en su propio git worktree dentro de `.worktrees/<branch-name>` (ignorado por git), nunca en el worktree principal.
 
 ### Merge y commits
 
