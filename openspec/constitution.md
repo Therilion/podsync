@@ -139,6 +139,7 @@ Estas restricciones solo cambian modificando el TDD y, si afectan un principio, 
 - El título del PR es el mensaje del commit final, así que **debe** seguir Conventional Commits, en inglés. Un check de CI lo valida.
 - Commits con Conventional Commits, en inglés.
 - **Sin atribución a IA en commits.** Cuando una IA crea o redacta un commit, el mensaje no puede incluir trailers `Co-authored-by` que atribuyan a una IA o a su proveedor, ni líneas de firma como `Generated with ...` o emojis de atribución. El autor del commit es la persona que lo pide y lo revisa.
+- **Sin escrituras en git ni en GitHub sin autorización.** Una IA no puede crear commits, hacer push, abrir o mergear PRs, ni hacer ninguna otra escritura en GitHub (ramas, tags, releases, issues, comentarios o ajustes del repo) sin autorización explícita del owner para esa acción concreta. Pedir un cambio en un archivo no autoriza a commitearlo. Una autorización vale solo para la acción indicada; no se extiende a acciones posteriores.
 - Toda spec o cambio de OpenSpec debe referenciar los requerimientos del TDD que cubre (RF-xx / RNF-xx).
 
 ### Versionado y releases (release-please)
