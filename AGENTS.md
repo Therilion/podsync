@@ -32,6 +32,7 @@ Si una tarea contradice la constitución, detente y avisa al owner. No la implem
 
 ## Commits y títulos de PR
 
+- **Nunca** hagas commit, push, PR, merge ni ninguna otra escritura en GitHub (ramas, tags, releases, issues, comentarios o ajustes del repo) sin autorización explícita del owner para esa acción concreta. Termina el cambio, muestra qué vas a commitear y pregunta. Pedir un cambio en un archivo no autoriza a commitearlo, y una autorización no se extiende a acciones posteriores.
 - Conventional Commits: `<type>(<scope>): <description>`.
   - Tipos: `feat`, `fix`, `perf`, `refactor`, `test`, `docs`, `build`, `ci`, `chore`.
   - Cambio incompatible: `!` tras el tipo (`feat(api)!: ...`) o footer `BREAKING CHANGE:`.
@@ -70,6 +71,7 @@ Si una tarea contradice la constitución, detente y avisa al owner. No la implem
 ## Prohibido
 
 - Commit directo a `main` o merge que no sea squash.
+- Commit, push, PR, merge u otra escritura en GitHub sin autorización explícita del owner.
 - Trailers `Co-authored-by` o firmas de IA en commits.
 - Mergear código de spikes en `main`.
 - Adelantar funcionalidades de hitos futuros o de TDD §13.
