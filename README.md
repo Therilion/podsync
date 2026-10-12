@@ -100,4 +100,4 @@ El proyecto usa flujo trunk-based con ramas cortas desde `main`, PRs con squash 
 
 ## Licencia
 
-Pendiente de definir.
+[MIT](LICENSE) © Pedro Escobar Céspedes.
