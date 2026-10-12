@@ -1,0 +1,88 @@
+# =============================================================================
+# PodSync — .gitignore
+# Monorepo: Turborepo + pnpm (React/Vite, NestJS) + Python worker + Docker
+# =============================================================================
+
+# --- Dependencies -------------------------------------------------------------
+node_modules/
+.pnpm-store/
+
+# --- Build output -------------------------------------------------------------
+dist/
+build/
+out/
+*.tsbuildinfo
+
+# --- Turborepo / Vite / tool caches -------------------------------------------
+.turbo/
+.vite/
+.eslintcache
+.stylelintcache
+*.local
+
+# --- Environment and secrets (constitution, principle IV) ---------------------
+# Keep committed templates: .env.example
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.crt
+*.p12
+
+# --- Python (audio worker) ----------------------------------------------------
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+.ruff_cache/
+.mypy_cache/
+.pytest_cache/
+*.egg-info/
+
+# --- Tests and coverage -------------------------------------------------------
+coverage/
+.coverage
+.coverage.*
+htmlcov/
+.nyc_output/
+junit.xml
+playwright-report/
+blob-report/
+test-results/
+playwright/.cache/
+
+# --- Logs ---------------------------------------------------------------------
+logs/
+*.log
+npm-debug.log*
+pnpm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# --- Local runtime data (Docker volumes, Caddy, recordings) -------------------
+# Bind-mounted data for PostgreSQL, Dragonfly and SeaweedFS in local dev.
+.data/
+docker-data/
+caddy_data/
+caddy_config/
+# Scratch output from spikes and local recording tests.
+# Audio test fixtures must live under a tests/fixtures/ directory (not ignored).
+tmp/
+.tmp/
+recordings/
+
+# --- Editors and OS -----------------------------------------------------------
+.idea/
+.vscode/*
+!.vscode/extensions.json
+!.vscode/settings.json
+*.swp
+*.swo
+.DS_Store
+Thumbs.db
+
+# --- AI tooling: local, per-user files only -----------------------------------
+# Shared OpenSpec skills/commands in .claude/ and .agents/ ARE committed.
+.claude/settings.local.json
+CLAUDE.local.md
