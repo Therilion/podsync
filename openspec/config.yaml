@@ -1,0 +1,18 @@
+schema: spec-driven
+
+context: |
+  PodSync: remote podcast recording platform with per-participant local recording.
+  Technical source of truth: docs/podsync-tdd.md (TDD v1.7.1).
+  Non-negotiable rules: openspec/constitution.md. Read it before proposing,
+  designing or implementing any change. Reject or adjust any plan that violates it.
+  Monorepo: Turborepo + pnpm. Docs in Spanish; code and commits in English.
+
+rules:
+  proposal:
+    - Reference the TDD requirements covered (RF-xx / RNF-xx) and the target milestone.
+    - State compliance with each constitution principle the change touches.
+  design:
+    - Any new service or runtime dependency requires a short ADR (constitution VI).
+  tasks:
+    - Write failing tests first for critical logic listed in constitution §2.
+    - Include logging and metrics tasks for every new feature (constitution V).
