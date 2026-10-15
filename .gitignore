@@ -86,6 +86,7 @@ Thumbs.db
 .claude
 .agents
 CLAUDE.local.md
+.gemini
 
 # Add worktrees to use for development and revisions
 .worktrees
